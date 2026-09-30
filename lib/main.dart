@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:news_c19/data/hive_adapters/source_dm_adapter.dart';
+import 'package:news_c19/ui/screens/news/news_screen.dart';
+import 'package:news_c19/ui/screens/splash/splash_screen.dart';
+import 'package:news_c19/ui/utils/app_theme.dart';
 
-void main() {
+import 'data/repository/news_repository/data_sources/local_data_source/news_local_data_source.dart';
+
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(SourceDMAdapter());
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
+
+      home: const SplashScreen(),
+    );
   }
 }
